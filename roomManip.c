@@ -49,8 +49,6 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
             char *trimmedName = str_trim(name);
 
             strcpy(rooms[roomCount].name, trimmedName);
-            free(name);
-            free(trimmedName);
 
             roomProperty++;
             continue;
@@ -65,8 +63,6 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
             char *trimmedCode = str_trim(code);
 
             strcpy(rooms[roomCount].code, trimmedCode);
-            free(code);
-            free(trimmedCode);
 
             roomProperty++;
             continue;
@@ -79,13 +75,6 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
             char *trimmedDesc = str_trim(desc);
 
             strcpy(rooms[roomCount].description, trimmedDesc);
-
-            free(desc);
-            free(trimmedDesc);
-
-            printf("Room Name: %s\n", rooms[roomCount].name);
-            printf("Room Code: %s\n", rooms[roomCount].code);
-            printf("Room Description: %s\n", rooms[roomCount].description);
 
             roomCount++;
 
@@ -103,8 +92,9 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
 
     for (int i = 0; i < roomCount; i++)
     {
-        printf("Room Name %s\n", rooms[i].name);
-        printf("Room Code %s\n", rooms[i].code);
+        printf("Room Name: %s\n", rooms[i].name);
+        printf("Room Code: %s\n", rooms[i].code);
+        printf("Room Desc: %s\n", rooms[i].description);
     }
 
     return rooms;
