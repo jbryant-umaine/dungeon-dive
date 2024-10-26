@@ -2,10 +2,10 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -g
 
 # Source files
-SRC = main.c stringManip.c
+SRC = main.c stringManip.c roomManip.c
 
 # Object files
 OBJ = $(SRC:.c=.o)

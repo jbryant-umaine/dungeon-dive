@@ -11,11 +11,12 @@ str_cut: takes three arguments, the string pointer, an integer representing the 
 
 char *str_cut(char charString[], int start, int end)
 {
-    // Create string with capacity of start  to end index
+    // Create string with capacity of start to end index
     char *trimmedString = malloc((end - start + 2) * sizeof(char));
 
     // Copy first to last index into new string
     strncpy(trimmedString, &charString[start], end - start + 1);
+    trimmedString[end - start + 1] = '\0';
 
     return trimmedString;
 }

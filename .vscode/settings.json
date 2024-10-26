@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/jake/code/dungeon-dive",
+            "binaryPath": "/home/jake/code/dungeon-dive/main",
+            "binaryArgs": []
+        }
+    ]
+}
