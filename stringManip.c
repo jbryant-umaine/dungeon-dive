@@ -18,7 +18,7 @@ char *str_cut(char *charString, int start, int end)
     // Copy first to last index into new string
     strncpy(trimmedString, &charString[start], end - start + 1);
 
-    trimmedString[end - start + 1] = 0;
+    trimmedString[end - start + 1] = '\0';
 
     return trimmedString;
 }
