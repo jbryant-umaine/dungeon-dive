@@ -5,18 +5,10 @@
 
 struct Room *roomCreate(struct Room *room)
 {
-    struct Room *copy = malloc(sizeof(struct Room));
+    struct Room *r = malloc(sizeof(struct Room));
+    *r = *room;
 
-    strcpy(copy->name, room->name);
-    strcpy(copy->code, room->code);
-    strcpy(copy->description, room->description);
-
-    copy->north = NULL;
-    copy->east = NULL;
-    copy->south = NULL;
-    copy->south = NULL;
-
-    return copy;
+    return r;
 }
 
 struct Room *readRoomFile(char *fileName, int *roomSize)
@@ -55,6 +47,9 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
 
             strcpy(rooms[roomCount].name, trimmedName);
 
+            free(name);
+            free(trimmedName);
+
             roomProperty++;
             continue;
         }
@@ -69,6 +64,9 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
 
             strcpy(rooms[roomCount].code, trimmedCode);
 
+            free(code);
+            free(trimmedCode);
+
             roomProperty++;
             continue;
         }
@@ -80,6 +78,9 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
             char *trimmedDesc = str_trim(desc);
 
             strcpy(rooms[roomCount].description, trimmedDesc);
+
+            free(desc);
+            free(trimmedDesc);
 
             roomCount++;
 
