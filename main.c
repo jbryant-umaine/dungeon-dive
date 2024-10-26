@@ -25,8 +25,8 @@ struct Room *createDungeon(struct Room *rooms, int sizeOfRooms, int sizeOfDungeo
 
         if (previous != NULL)
         {
-            previous->east = &dungeons[i];
-            dungeons[i].west = previous;
+            previous->East = &dungeons[i];
+            dungeons[i].West = previous;
         }
 
         previous = &dungeons[i];
@@ -48,12 +48,12 @@ void printDungeon(struct Room *dungeons)
     {
         printf("Room %s: %s\n", temp->code, temp->name);
 
-        if (temp->east == NULL)
+        if (temp->East == NULL)
         {
             break;
         }
 
-        temp = temp->east;
+        temp = temp->East;
     }
 }
 

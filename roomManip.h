@@ -9,10 +9,10 @@ struct Room
     char name[50];
     char code[3];
     char description[500];
-    struct Room *north;
-    struct Room *east;
-    struct Room *south;
-    struct Room *west;
+    struct Room *North;
+    struct Room *East;
+    struct Room *South;
+    struct Room *West;
 };
 
 // Function prototypes
