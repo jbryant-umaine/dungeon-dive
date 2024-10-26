@@ -12,32 +12,34 @@ struct Room *createDungeon(struct Room *rooms, int sizeOfRooms, int sizeOfDungeo
 {
     srand(time(0));
 
-    struct Room *dungeons = malloc(sizeof(struct Room) * sizeOfDungeons);
-
-    struct Room *previous = NULL;
+    struct Room *head = NULL;
+    struct Room *current = NULL;
 
     for (int i = 0; i < sizeOfDungeons; i++)
     {
-        int r = rand();
-        int n = r % sizeOfRooms;
+        int n = rand() % sizeOfRooms;
 
-        dungeons[i] = *roomCreate(&rooms[n]);
+        struct Room *newRoom = roomCreate(&rooms[n]);
 
-        if (previous != NULL)
+        if (head == NULL)
         {
-            previous->East = &dungeons[i];
-            dungeons[i].West = previous;
+            head = newRoom;
+            current = head;
         }
-
-        previous = &dungeons[i];
+        else
+        {
+            current->East = newRoom;
+            newRoom->West = current;
+            current = newRoom;
+        }
     }
 
-    return dungeons;
+    return head;
 }
 
-void deleteDungeon(struct Room *dungeons)
+void deleteDungeon(struct Room *dungeon)
 {
-    free(dungeons);
+    free(dungeon);
 }
 
 void printDungeon(struct Room *dungeons)
@@ -79,13 +81,19 @@ int main(int argc, char *argv[])
         num = atoi(buffer);
     }
 
+    if (num == 0)
+    {
+        printf("Invalid dungeon count.\n");
+        return 0;
+    }
+
     printf("\n");
 
-    struct Room *dungeons = createDungeon(rooms, *roomSize, num);
+    struct Room *dungeon = createDungeon(rooms, *roomSize, num);
 
-    printDungeon(dungeons);
+    printDungeon(dungeon);
 
-    deleteDungeon(dungeons);
+    deleteDungeon(dungeon);
 
     return 0;
 }
