@@ -33,6 +33,23 @@ struct Room *createDungeon(struct Room *rooms, int sizeOfRooms, int sizeOfDungeo
     return dungeons;
 }
 
+void printDungeon(struct Room *dungeons)
+{
+    struct Room *temp = dungeons;
+
+    while (1)
+    {
+        printf("Room %s: %s\n", temp->code, temp->name);
+
+        if (temp->east == NULL)
+        {
+            break;
+        }
+
+        temp = temp->east;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     char *testWsRemove = str_trim("     hello");
@@ -46,14 +63,9 @@ int main(int argc, char *argv[])
 
     struct Room *rooms = readRoomFile(argv[1], roomSize);
 
-    for (int i = 0; i < *roomSize; i++)
-    {
-        printf("Room Name: %s\n", rooms[i].name);
-        printf("Room Code: %s\n", rooms[i].code);
-        printf("Room Desc: %s\n", rooms[i].description);
-    }
-
     struct Room *dungeons = createDungeon(rooms, *roomSize, 10);
+
+    printDungeon(dungeons);
 
     return 0;
 }
