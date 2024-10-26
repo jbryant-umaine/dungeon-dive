@@ -24,8 +24,8 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
     FILE *fp = fopen(fileName, "r");
     if (fp == NULL)
     {
-        printf("File could not be opened.");
-        return 0;
+        printf("File could not be opened.\n");
+        exit(1);
     }
 
     // Keep track of how many rooms along with which property.

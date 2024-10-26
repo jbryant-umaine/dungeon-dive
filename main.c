@@ -61,6 +61,12 @@ int main(int argc, char *argv[])
 {
     int *roomSize = malloc(sizeof(int));
 
+    if (argc != 2)
+    {
+        printf("Invalid argument count. Must supply path to a text file.\n");
+        return 0;
+    }
+
     struct Room *rooms = readRoomFile(argv[1], roomSize);
 
     char buffer[256];
