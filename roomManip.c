@@ -11,6 +11,11 @@ struct Room *roomCreate(struct Room *room)
     strcpy(copy->code, room->code);
     strcpy(copy->description, room->description);
 
+    copy->north = NULL;
+    copy->east = NULL;
+    copy->south = NULL;
+    copy->south = NULL;
+
     return copy;
 }
 
@@ -89,13 +94,6 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
     fclose(fp);
 
     *roomSize = roomCount;
-
-    for (int i = 0; i < roomCount; i++)
-    {
-        printf("Room Name: %s\n", rooms[i].name);
-        printf("Room Code: %s\n", rooms[i].code);
-        printf("Room Desc: %s\n", rooms[i].description);
-    }
 
     return rooms;
 }
