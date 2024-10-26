@@ -33,6 +33,11 @@ struct Room *createDungeon(struct Room *rooms, int sizeOfRooms, int sizeOfDungeo
     return dungeons;
 }
 
+void deleteDungeon(struct Room *dungeons)
+{
+    free(dungeons);
+}
+
 void printDungeon(struct Room *dungeons)
 {
     struct Room *temp = dungeons;
