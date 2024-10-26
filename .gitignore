@@ -1,0 +1,8 @@
+# Ignore the .vscode directory (correct path usage)
+.vscode/
+
+# Ignore all code-workspace files
+*.code-workspace
+
+# Ignore all object files with .o extension
+*.o
