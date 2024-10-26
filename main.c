@@ -10,6 +10,8 @@ For now, only make the dungeon a 2d linked list. Make sure it’s bi-directional
 */
 struct Room *createDungeon(struct Room *rooms, int sizeOfRooms, int sizeOfDungeons)
 {
+    srand(time(0));
+
     struct Room *dungeons = malloc(sizeof(struct Room) * sizeOfDungeons);
 
     struct Room *previous = NULL;
@@ -57,20 +59,27 @@ void printDungeon(struct Room *dungeons)
 
 int main(int argc, char *argv[])
 {
-    char *testWsRemove = str_trim("     hello");
-    printf("Whitespace removal: %s\n", testWsRemove);
-
-    char *testStrCut = str_cut("AA", 0, 2);
-    char *testWsRmv = str_trim(testStrCut);
-    printf("String substring: %s\n", testWsRmv);
-
     int *roomSize = malloc(sizeof(int));
 
     struct Room *rooms = readRoomFile(argv[1], roomSize);
 
-    struct Room *dungeons = createDungeon(rooms, *roomSize, 10);
+    char buffer[256];
+    int num = 0;
+
+    printf("Enter dungeon size: ");
+
+    if (fgets(buffer, sizeof(buffer), stdin) != NULL)
+    {
+        num = atoi(buffer);
+    }
+
+    printf("\n");
+
+    struct Room *dungeons = createDungeon(rooms, *roomSize, num);
 
     printDungeon(dungeons);
+
+    deleteDungeon(dungeons);
 
     return 0;
 }
