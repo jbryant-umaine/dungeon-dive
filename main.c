@@ -39,7 +39,14 @@ struct Room *createDungeon(struct Room *rooms, int sizeOfRooms, int sizeOfDungeo
 
 void deleteDungeon(struct Room *dungeon)
 {
-    free(dungeon);
+    struct Room *current = dungeon;
+    struct Room *nextNode;
+    while (current)
+    {
+        nextNode = current->East;
+        free(current);
+        current = nextNode;
+    }
 }
 
 void printDungeon(struct Room *dungeons)
@@ -94,6 +101,8 @@ int main(int argc, char *argv[])
     printDungeon(dungeon);
 
     deleteDungeon(dungeon);
+
+    dungeon = NULL;
 
     return 0;
 }
