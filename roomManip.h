@@ -3,20 +3,22 @@
 
 #include "stringManip.h"
 
+typedef struct Room Room;
+
 // Room struct that defines required data.
 struct Room
 {
     char name[50];
     char code[3];
     char description[500];
-    struct Room *North;
-    struct Room *East;
-    struct Room *South;
-    struct Room *West;
+    Room *North;
+    Room *East;
+    Room *South;
+    Room *West;
 };
 
 // Function prototypes
-struct Room *roomCreate(struct Room *room);
-struct Room *readRoomFile(char *fileName, int *roomSize);
+Room *roomCreate(Room *room);
+Room *readRoomFile(char *fileName, int *roomSize);
 
 #endif

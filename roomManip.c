@@ -3,15 +3,15 @@
 #include <string.h>
 #include "roomManip.h"
 
-struct Room *roomCreate(struct Room *room)
+Room *roomCreate(Room *room)
 {
-    struct Room *r = malloc(sizeof(struct Room));
+    Room *r = malloc(sizeof(Room));
     *r = *room;
 
     return r;
 }
 
-struct Room *readRoomFile(char *fileName, int *roomSize)
+Room *readRoomFile(char *fileName, int *roomSize)
 {
     FILE *fp = fopen(fileName, "r");
     if (fp == NULL)
@@ -25,7 +25,7 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
     int roomProperty = 0;
 
     // Allocate memory for one room.
-    struct Room *rooms = malloc(sizeof(struct Room));
+    Room *rooms = malloc(sizeof(Room));
 
     char line[1000];
 
@@ -84,7 +84,7 @@ struct Room *readRoomFile(char *fileName, int *roomSize)
 
             roomCount++;
 
-            struct Room *temp = realloc(rooms, (roomCount + 1) * sizeof(struct Room));
+            Room *temp = realloc(rooms, (roomCount + 1) * sizeof(struct Room));
 
             roomProperty = 0;
 

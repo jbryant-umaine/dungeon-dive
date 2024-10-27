@@ -8,18 +8,18 @@ createDungeon: Takes the pointer to the room array, the size of the room array, 
 This will look at the room array and pick a random “room” for each room in the dungeon. Aka, create a copy of the room then add it to the linked list.
 For now, only make the dungeon a 2d linked list. Make sure it’s bi-directional (you can go both east and west).
 */
-struct Room *createDungeon(struct Room *rooms, int sizeOfRooms, int sizeOfDungeons)
+Room *createDungeon(Room *rooms, int sizeOfRooms, int sizeOfDungeons)
 {
     srand(time(0));
 
-    struct Room *head = NULL;
-    struct Room *current = NULL;
+    Room *head = NULL;
+    Room *current = NULL;
 
     for (int i = 0; i < sizeOfDungeons; i++)
     {
         int n = rand() % sizeOfRooms;
 
-        struct Room *newRoom = roomCreate(&rooms[n]);
+        Room *newRoom = roomCreate(&rooms[n]);
 
         if (head == NULL)
         {
@@ -37,10 +37,10 @@ struct Room *createDungeon(struct Room *rooms, int sizeOfRooms, int sizeOfDungeo
     return head;
 }
 
-void deleteDungeon(struct Room *dungeon)
+void deleteDungeon(Room *dungeon)
 {
-    struct Room *current = dungeon;
-    struct Room *nextNode;
+    Room *current = dungeon;
+    Room *nextNode;
     while (current)
     {
         nextNode = current->East;
@@ -49,9 +49,9 @@ void deleteDungeon(struct Room *dungeon)
     }
 }
 
-void printDungeon(struct Room *dungeons)
+void printDungeon(Room *dungeons)
 {
-    struct Room *temp = dungeons;
+    Room *temp = dungeons;
 
     while (1)
     {
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    struct Room *rooms = readRoomFile(argv[1], roomSize);
+    Room *rooms = readRoomFile(argv[1], roomSize);
 
     char buffer[256];
     int num = 0;
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 
     printf("\n");
 
-    struct Room *dungeon = createDungeon(rooms, *roomSize, num);
+    Room *dungeon = createDungeon(rooms, *roomSize, num);
 
     printDungeon(dungeon);
 
