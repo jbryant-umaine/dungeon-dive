@@ -111,7 +111,100 @@ int main(int argc, char *argv[])
 
     Room *dungeon = createDungeon(rooms, *roomSize, dungeonGridSize);
 
+    Room *currentRoom = dungeon;
+
     printDungeon(dungeon, dungeonGridSize);
+
+    printf("\n");
+
+    while (1)
+    {
+        /*
+        Display the room description of the room you’re in (start at the head)
+        Display list of available exists
+        Ask the user for a command
+        Process/act on the command
+        */
+        printf("<Current Room: %s>\n", currentRoom->name);
+        printf("Description: %s\n\n", currentRoom->description);
+        printf("Available exits:\n");
+        if (currentRoom->North)
+        {
+            printf("\t- North: %s\n", currentRoom->North->name);
+        }
+        if (currentRoom->East)
+        {
+            printf("\t- East: %s\n", currentRoom->East->name);
+        }
+        if (currentRoom->South)
+        {
+            printf("\t- South: %s\n", currentRoom->South->name);
+        }
+        if (currentRoom->West)
+        {
+            printf("\t- West: %s\n", currentRoom->West->name);
+        }
+
+        char buffer[256];
+
+        printf("\ncommand: ");
+
+        if (fgets(buffer, sizeof(buffer), stdin) != NULL)
+        {
+            char *command = str_cut(buffer, 0, 5);
+            command = str_trim(command);
+
+            printf("\n");
+
+            if (strncmp("move", command, strlen("move")) == 0)
+            {
+                char direction = buffer[5];
+                switch (direction)
+                {
+                case 'N':
+                case 'n':
+                    if (currentRoom->North)
+                        currentRoom = currentRoom->North;
+                    else
+                        printf("You bump into a wall!\n");
+                    break;
+                case 'E':
+                case 'e':
+                    if (currentRoom->East)
+                        currentRoom = currentRoom->East;
+                    else
+                        printf("You bump into a wall!\n");
+                    break;
+                case 'S':
+                case 's':
+                    if (currentRoom->South)
+                        currentRoom = currentRoom->South;
+                    else
+                        printf("You bump into a wall!\n");
+                    break;
+                case 'W':
+                case 'w':
+                    if (currentRoom->West)
+                        currentRoom = currentRoom->West;
+                    else
+                        printf("You bump into a wall!\n");
+                    break;
+                default:
+                    printf("Invalid direction. Options: <n,e,s,w>\n");
+                }
+                printf("\n");
+                continue;
+            }
+
+            if (strncmp("exit", command, strlen("exit")) == 0)
+            {
+                printf("Exiting dungeon...\n");
+                break;
+            }
+
+            printf("Invalid command. (options: move <n,e,s,w>, exit)\n\n");
+        }
+    }
 
     deleteDungeon(dungeon, dungeonGridSize);
 
