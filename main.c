@@ -3,11 +3,9 @@
 #include "roomManip.h"
 #include <time.h>
 
-/*
-createDungeon: Takes the pointer to the room array, the size of the room array, and the size of the dungeon to be created. Returns back a pointer to the first room of the “dungeon”.
-This will look at the room array and pick a random “room” for each room in the dungeon. Aka, create a copy of the room then add it to the linked list.
-For now, only make the dungeon a 2d linked list. Make sure it’s bi-directional (you can go both east and west).
-*/
+/**
+ * Creates a dungeon which is a 2D array filled with a random selection of rooms. Returns the head of the dungeon.
+ */
 Room *createDungeon(Room *rooms, int sizeOfRooms, int dungeonGridSize)
 {
     srand(time(0));
