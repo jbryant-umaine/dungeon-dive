@@ -62,6 +62,9 @@ void deleteDungeon(Room *dungeon, int dungeonGridSize)
     }
 }
 
+/**
+ * Print a grid visual of the dungeon.
+ */
 void printDungeon(Room *dungeon, int dungeonGridSize)
 {
     Room *row = dungeon; // Start at head of the dungeon)
