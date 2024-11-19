@@ -8,33 +8,39 @@ createDungeon: Takes the pointer to the room array, the size of the room array, 
 This will look at the room array and pick a random “room” for each room in the dungeon. Aka, create a copy of the room then add it to the linked list.
 For now, only make the dungeon a 2d linked list. Make sure it’s bi-directional (you can go both east and west).
 */
-Room *createDungeon(Room *rooms, int sizeOfRooms, int sizeOfDungeons)
+Room *createDungeon(Room *rooms, int sizeOfRooms, int dungeonGridSize)
 {
     srand(time(0));
 
-    Room *head = NULL;
-    Room *current = NULL;
+    Room *grid[dungeonGridSize][dungeonGridSize];
+    memset(grid, 0, sizeof(grid));
 
-    for (int i = 0; i < sizeOfDungeons; i++)
+    for (int i = 0; i < dungeonGridSize; i++)
     {
-        int n = rand() % sizeOfRooms;
-
-        Room *newRoom = roomCreate(&rooms[n]);
-
-        if (head == NULL)
+        for (int j = 0; j < dungeonGridSize; j++)
         {
-            head = newRoom;
-            current = head;
-        }
-        else
-        {
-            current->East = newRoom;
-            newRoom->West = current;
-            current = newRoom;
+            int n = rand() % sizeOfRooms;
+
+            Room *newRoom = roomCreate(&rooms[n]);
+            grid[i][j] = newRoom;
+
+            // Connect to the room to the west
+            if (j > 0)
+            {
+                newRoom->West = grid[i][j - 1];
+                grid[i][j - 1]->East = newRoom;
+            }
+
+            // Connect to the room to the north
+            if (i > 0)
+            {
+                newRoom->North = grid[i - 1][j];
+                grid[i - 1][j]->South = newRoom;
+            }
         }
     }
 
-    return head;
+    return grid[0][0]; // Return the head of the dungeon
 }
 
 void deleteDungeon(Room *dungeon)
@@ -49,20 +55,19 @@ void deleteDungeon(Room *dungeon)
     }
 }
 
-void printDungeon(Room *dungeons)
+void printDungeon(Room *dungeon, int dungeonGridSize)
 {
-    Room *temp = dungeons;
-
-    while (1)
+    Room *row = dungeon; // Start at head of the dungeon)
+    while (row != NULL)
     {
-        printf("Room %s: %s\n", temp->code, temp->name);
-
-        if (temp->East == NULL)
+        Room *current = row; // Traverse each row
+        while (current != NULL)
         {
-            break;
+            printf("%s ", current->code);
+            current = current->East; // Move to the next room in row
         }
-
-        temp = temp->East;
+        printf("\n");
+        row = row->South; // Move down a row
     }
 }
 
@@ -79,16 +84,17 @@ int main(int argc, char *argv[])
     Room *rooms = readRoomFile(argv[1], roomSize);
 
     char buffer[256];
-    int num = 0;
 
-    printf("Enter dungeon size: ");
+    int dungeonGridSize = 0;
+
+    printf("Enter dungeon grid size: ");
 
     if (fgets(buffer, sizeof(buffer), stdin) != NULL)
     {
-        num = atoi(buffer);
+        dungeonGridSize = atoi(buffer);
     }
 
-    if (num == 0)
+    if (dungeonGridSize == 0)
     {
         printf("Invalid dungeon count.\n");
         return 0;
@@ -96,11 +102,11 @@ int main(int argc, char *argv[])
 
     printf("\n");
 
-    Room *dungeon = createDungeon(rooms, *roomSize, num);
+    Room *dungeon = createDungeon(rooms, *roomSize, dungeonGridSize);
 
-    printDungeon(dungeon);
+    printDungeon(dungeon, dungeonGridSize);
 
-    deleteDungeon(dungeon);
+    // deleteDungeon(dungeon);
 
     dungeon = NULL;
 
