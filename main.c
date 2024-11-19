@@ -43,15 +43,24 @@ Room *createDungeon(Room *rooms, int sizeOfRooms, int dungeonGridSize)
     return grid[0][0]; // Return the head of the dungeon
 }
 
-void deleteDungeon(Room *dungeon)
+/**
+ * Loops through each room in the dungeon grid and frees the memory of each one.
+ */
+void deleteDungeon(Room *dungeon, int dungeonGridSize)
 {
-    Room *current = dungeon;
-    Room *nextNode;
-    while (current)
+    Room *row = dungeon;
+
+    while (row != NULL)
     {
-        nextNode = current->East;
-        free(current);
-        current = nextNode;
+        Room *current = row;
+        Room *nextRow = row->South;
+        while (current != NULL)
+        {
+            Room *nextRoom = current->East;
+            free(current);
+            current = nextRoom;
+        }
+        row = nextRow;
     }
 }
 
@@ -106,7 +115,7 @@ int main(int argc, char *argv[])
 
     printDungeon(dungeon, dungeonGridSize);
 
-    // deleteDungeon(dungeon);
+    deleteDungeon(dungeon, dungeonGridSize);
 
     dungeon = NULL;
 
